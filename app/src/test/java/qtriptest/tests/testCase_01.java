@@ -1,5 +1,6 @@
 package qtriptest.tests;
 
+import qtriptest.driverManager.DriverSingleton;
 import qtriptest.pages.HomePage;
 import qtriptest.pages.LoginPage;
 import qtriptest.pages.RegisterPage;
@@ -30,17 +31,20 @@ public class testCase_01 {
     @BeforeSuite(alwaysRun = true, enabled = true)
 	public void createDriver() throws MalformedURLException {
 		logStatus("driver", "Initializing driver", "Started");
-		final DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setBrowserName(BrowserType.CHROME);
-        // Add Chrome options to disable caching
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-cache", "--disable-application-cache", "--disable-offline-load-stale-cache", "--disk-cache-size=0");
-        capabilities.merge(options);
+		// final DesiredCapabilities capabilities = new DesiredCapabilities();
+		// capabilities.setBrowserName(BrowserType.CHROME);
+        // // Add Chrome options to disable caching
+        // ChromeOptions options = new ChromeOptions();
+        // options.addArguments("--disable-cache", "--disable-application-cache", "--disable-offline-load-stale-cache", "--disk-cache-size=0");
+        // capabilities.merge(options);
 
-		driver = new RemoteWebDriver(new URL("http://localhost:8082/wd/hub"), capabilities);
-        driver.manage().window().maximize();
-        driver.get("https://qtripdynamic-qa-frontend.vercel.app/");
-        System.out.println("Navigated to: " + driver.getCurrentUrl());
+		// driver = new RemoteWebDriver(new URL("http://localhost:8082/wd/hub"), capabilities);
+        // driver.manage().window().maximize();
+        // driver.get("https://qtripdynamic-qa-frontend.vercel.app/");
+        // System.out.println("Navigated to: " + driver.getCurrentUrl());
+
+        driver = DriverSingleton.getDriver("chrome");
+        DriverSingleton.launchApp("https://qtripdynamic-qa-frontend.vercel.app/");
 		logStatus("driver", "Initializing driver", "Success");
         // initializing pages
         homePage = new HomePage(driver);
@@ -48,7 +52,7 @@ public class testCase_01 {
         loginPage = new LoginPage(driver, registerPage);
 	}
 
-    @Test(dataProvider = "qtripData", dataProviderClass = ExternalDataProvider.class, description = "Registration and Login flow")
+    @Test(dataProvider = "qtripData", dataProviderClass = ExternalDataProvider.class, description = "Registration and Login flow",enabled = true, priority = 1, groups = {"Login Flow"})
     public void TestCase01(String userName, String password) throws InterruptedException{
         softAssert = new SoftAssert();
         try{   

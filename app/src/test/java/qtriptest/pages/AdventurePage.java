@@ -1,5 +1,6 @@
 package qtriptest.pages;
 
+import qtriptest.SeleniumWrapper;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.poi.ss.formula.functions.Index;
@@ -162,7 +163,8 @@ public class AdventurePage {
     public void clickOnHomeButton() throws InterruptedException{
        // Thread.sleep(3000);
        wait.until(ExpectedConditions.visibilityOf(homeButton));
-        homeButton.click();
+       // homeButton.click();
+       SeleniumWrapper.click(homeButton, driver);
     }
 
     public void selectAdventure(String adventureTxt) throws InterruptedException{

@@ -1,5 +1,6 @@
 package qtriptest.pages;
 
+import qtriptest.SeleniumWrapper;
 import java.util.UUID;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -16,6 +17,7 @@ public class RegisterPage {
     private static final String registerPageEndPoint = "/pages/register/";
     static String formattedEmail = " ";
     WebDriverWait wait;
+    String registerPageUrl = "https://qtripdynamic-qa-frontend.vercel.app/pages/register/";
 
     public RegisterPage(RemoteWebDriver driver){
         this.driver=driver;
@@ -42,6 +44,7 @@ public class RegisterPage {
 
     public Boolean isRegistrationPageNavigationSucceed(){
         Boolean status = false;
+        SeleniumWrapper.navigate(driver, registerPageUrl);
         if(driver.getCurrentUrl().contains(registerPageEndPoint) || registerTxt.getText().equalsIgnoreCase("Register")){
             status = true;
             return status;
@@ -57,12 +60,19 @@ public class RegisterPage {
           email = String.format("testmail_%s@email.com",uuid.toString());
            RegisterPage.formattedEmail=email;
 
-           System.out.println("formatted user name : "+formattedEmail);
-           emailTextBox.sendKeys(email);
-           passwordTxtBox.sendKeys(password);
+           System.out.println("formatted user name on register page : "+formattedEmail);
+           //emailTextBox.sendKeys(email);
+           SeleniumWrapper.sendKeys(emailTextBox, email);
+           //passwordTxtBox.sendKeys(password);
+           System.out.println("password on registerpage : "+password);
+           SeleniumWrapper.sendKeys(passwordTxtBox, password);
            confirmPassword = password;
-           confirmPasswordTxtBox.sendKeys(confirmPassword);
-           registerNowButton.click();
+           //confirmPasswordTxtBox.sendKeys(confirmPassword);
+           System.out.println("confirm password on registerpage : "+confirmPassword);
+           SeleniumWrapper.sendKeys(confirmPasswordTxtBox, confirmPassword);
+           //registerNowButton.click();
+           SeleniumWrapper.click(registerNowButton, driver);
+           Thread.sleep(5000);
         }
     }
 }

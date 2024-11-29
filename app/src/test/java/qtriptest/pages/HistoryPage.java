@@ -1,6 +1,7 @@
 
 package qtriptest.pages;
 
+import qtriptest.SeleniumWrapper;
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.WebElement;
@@ -136,12 +137,14 @@ public class HistoryPage {
 
 public void clickOnLogout(){
     wait.until(ExpectedConditions.visibilityOf(logoutBtn));
-    logoutBtn.click();
+    //logoutBtn.click();
+    SeleniumWrapper.click(logoutBtn, driver);
 }
 
 public void clickOnHomeBtn() throws InterruptedException {
     Thread.sleep(2000);
-    homeBtn.click();
+    //homeBtn.click();
+    SeleniumWrapper.click(homeBtn, driver);
 }
 
 

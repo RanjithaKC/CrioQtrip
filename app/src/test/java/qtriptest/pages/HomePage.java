@@ -1,5 +1,6 @@
 package qtriptest.pages;
 
+import qtriptest.SeleniumWrapper;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
@@ -61,8 +62,9 @@ public class HomePage {
 
     public void clickRegister()throws InterruptedException{
         System.out.println("Navigating to register page");
-        registerButton.click();
+        //registerButton.click();
         //Thread.sleep(3000);
+        SeleniumWrapper.click(registerButton, driver);
     }
 
     public Boolean isSpecifiedMemberVisible() throws InterruptedException{
@@ -77,15 +79,18 @@ public class HomePage {
         return logoutButton.getText().equals("Logout");
     }
 
-    public void logoutUser(){
-        logoutButton.click();
+    public void logoutUser() throws InterruptedException{
+       // logoutButton.click();
+       SeleniumWrapper.click(logoutButton, driver);
+       Thread.sleep(3000);
     }
 
     public void searchCity(String city) throws InterruptedException{
         Thread.sleep(3000);
         wait.until(ExpectedConditions.visibilityOf(searchTxtBox));
-        searchTxtBox.clear();
-        searchTxtBox.sendKeys(city);
+        // searchTxtBox.clear();
+        // searchTxtBox.sendKeys(city);
+        SeleniumWrapper.sendKeys(searchTxtBox, city);
     }
 
     public Boolean assertAutoCompleteText(String city) throws InterruptedException{
@@ -121,7 +126,8 @@ public class HomePage {
        try{ 
         if(searchResults.getText().equals(city)){
             status = true;
-            searchResults.click();
+            //searchResults.click();
+            SeleniumWrapper.click(searchResults, driver);
         }
     }catch (NoSuchElementException | StaleElementReferenceException e) {
         System.out.println("\"No City found\" message not visible: " + e.getMessage());
@@ -130,7 +136,8 @@ public class HomePage {
     }
     public void clickOnHomeBtn() throws InterruptedException {
         Thread.sleep(2000);
-        homeBtn.click();
+       // homeBtn.click();
+       SeleniumWrapper.click(homeBtn, driver);
     }
 
 }

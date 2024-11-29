@@ -1,5 +1,6 @@
 package qtriptest.pages;
 
+import qtriptest.SeleniumWrapper;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -57,29 +58,33 @@ public class AdventureDetailsPage {
     public void bookAdventure(String guestName, String date , String count) throws InterruptedException{
         //Thread.sleep(2000);
         wait.until(ExpectedConditions.visibilityOf(nameTxtBox));
-        nameTxtBox.sendKeys(guestName);
-        dataTxtBox.sendKeys(date);
-        countTxtBox.clear();
-        countTxtBox.sendKeys(count);
+        //nameTxtBox.sendKeys(guestName);
+        SeleniumWrapper.sendKeys(nameTxtBox, guestName);
+        //dataTxtBox.sendKeys(date);
+        SeleniumWrapper.sendKeys(dataTxtBox, date);
+        //countTxtBox.clear();
+        //countTxtBox.sendKeys(count);
+        SeleniumWrapper.sendKeys(countTxtBox, count);
         Thread.sleep(2000);
-       boolean status = isTotalCostIsCorrect(count);
-       System.out.println("total cost correctness : "+status);
-        reserveButton.click();
+        boolean status = isTotalCostIsCorrect(count);
+        System.out.println("total cost correctness : "+status);
+        //reserveButton.click();
+        SeleniumWrapper.click(reserveButton, driver);
         Thread.sleep(3000);
     }
 
     public Boolean isTotalCostIsCorrect(String count){
         boolean status = false;
-       int perPersonPrice = Integer.parseInt(perPersonCost.getText());
-       int totalHeadCount = Integer.parseInt(count);
-      // int totalPrice =(perPersonPrice*count);
-      int totalPrice = perPersonPrice*totalHeadCount;
-       String totalCost = String.valueOf(totalPrice);
-       if(totalReservationCost.getText().equals(totalCost)){
-        System.out.println("total cost : "+totalReservationCost.getText());
-        status = true;
-       }
-       return status;
+        int perPersonPrice = Integer.parseInt(perPersonCost.getText());
+        int totalHeadCount = Integer.parseInt(count);
+        // int totalPrice =(perPersonPrice*count);
+        int totalPrice = perPersonPrice*totalHeadCount;
+        String totalCost = String.valueOf(totalPrice);
+        if(totalReservationCost.getText().equals(totalCost)){
+            System.out.println("total cost : "+totalReservationCost.getText());
+            status = true;
+        }
+        return status;
     }
 
     public boolean isBookingSuccessful() throws InterruptedException{
@@ -96,6 +101,7 @@ public class AdventureDetailsPage {
     }
 
     public void clickOnReservation(){
-        reservationLinkTxt.click();
+        //reservationLinkTxt.click();
+        SeleniumWrapper.click(reservationLinkTxt, driver);
     }
 }
